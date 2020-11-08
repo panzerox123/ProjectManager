@@ -11,7 +11,7 @@ const tasksRoute = require('./routes/tasks.route');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 
 if(!config.get("private_key")){
     console.error("Key error");
@@ -23,7 +23,7 @@ if(!config.get("private_key")){
 
 app.get('/', (req,res)=> res.status(200).send(`Node backend for Project Management App running on ${PORT}`));
 
-mongoose.connect('mongodb://localhost/project_manager', {useNewUrlParser: true}).then(()=>console.log("Connected to MongoDB")).catch(err=>{throw err});
+mongoose.connect('mongodb://localhost/project_manager', {useNewUrlParser: true, useUnifiedTopology: true}).then(()=>console.log("Connected to MongoDB")).catch(err=>{throw err});
 
 app.use('/api/auth', userRoute);
 app.use('/api/teams',teamsRoute);

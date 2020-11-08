@@ -40,7 +40,7 @@ router.post('/:teamNumber/newSubTask',auth,async(req,res) => {
     if(!user) return res.status(401);
     if(!user.teams.includes(req.params.teamNumber)) return res.status(401);
     let team = await Team.findOne({teamNumber: req.params.teamNumber});
-    let task = await Task.findOne({findById: req.body.taskID});
+    let task = await Task.findById(req.body.taskID);
     if(!task) return res.status(404);
     if(!team.tasks.includes(task._id)) return res.status(401);
     let subTask = new SubTask({
@@ -52,6 +52,24 @@ router.post('/:teamNumber/newSubTask',auth,async(req,res) => {
     task.subTasks.push(subTask._id);
     await task.save();
     res.status(200).send(task.subTasks);
+})
+
+router.get('/:teamNumber/:taskID/', auth, async(req,res) => {
+    let user = await User.findById(req.user._id);
+    if(!user) return res.status(401);
+    if(!user.teams.includes(req.params.teamNumber)) return res.status(401);
+    let team = await Team.findOne({teamNumber: req.params.teamNumber});
+    if(!team) return res.status(404);
+    if(!team.tasks.includes(req.params.taskID)) return res.send(404);
+    let task = await Task.findById(req.params.taskID);
+    if(!task) return res.status(404);
+    var subTaskList = [];
+    for(i in task.subTasks){
+        var temp_st = await SubTask.findById(task.subTasks[i]);
+        if(!temp_st) res.status(404);
+        else subTaskList.push(temp_st);
+    }
+    return res.status(200).send(subTaskList);
 })
 
 module.exports = router;

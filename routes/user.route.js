@@ -53,8 +53,9 @@ router.get('/teams',auth,async(req,res)=>{
     if(!user) return res.status(404);
     else {
         var return_arr = [];
+        console.log(user.teams);
         for(id in user.teams){
-            var team = await Team.findOne({teamNumber: id});
+            var team = await Team.findOne({teamNumber: user.teams[id]});
             if(!team) res.status(404);
             else return_arr.push(team); 
         }

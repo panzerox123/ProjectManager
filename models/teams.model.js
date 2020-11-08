@@ -10,7 +10,7 @@ const TeamSchema = new mongoose.Schema({
         type: String
     },
     tasks: {
-        type: [String],
+        type: [mongoose.Schema.Types.ObjectId],
     }
 });
 

@@ -8,7 +8,7 @@ const TaskSchema = new mongoose.Schema({
         type: Number
     },
     subTasks: {
-        type: [String]
+        type: [mongoose.Schema.Types.ObjectId]
     }
 })
 

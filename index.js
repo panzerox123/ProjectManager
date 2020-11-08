@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 8000;
 
 const userRoute = require('./routes/user.route');
 const teamsRoute = require('./routes/teams.route');
+const tasksRoute = require('./routes/tasks.route');
 
 app.use(cors());
 app.use(express.json());
@@ -26,5 +27,6 @@ mongoose.connect('mongodb://localhost/project_manager', {useNewUrlParser: true})
 
 app.use('/api/auth', userRoute);
 app.use('/api/teams',teamsRoute);
+app.use('/api/tasks',tasksRoute);
 
 app.listen(PORT, (console.log(`Server running on port ${PORT}`)));

@@ -2,12 +2,15 @@ const mongoose = require('mongoose');
 
 const TeamSchema = new mongoose.Schema({
     teamNumber: {
-        type: Number,
+        type: String,
         unique: true
     },
     teamName: {
         required: true,
         type: String
+    },
+    tasks: {
+        type: [String],
     }
 });
 

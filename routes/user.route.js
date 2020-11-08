@@ -2,6 +2,7 @@ const {User} = require('../models/user.model');
 const auth = require('../middleware/auth');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const {Team} = require('../models/teams.model');
 
 const router = express.Router();
 
@@ -45,6 +46,20 @@ router.post('/userLogin', async(req,res) => {
             return res.status(401).send("Wrong password.");
         }
     })
+})
+
+router.get('/teams',auth,async(req,res)=>{
+    let user = await User.findById(req.user._id);
+    if(!user) return res.status(404);
+    else {
+        var return_arr = [];
+        for(id in user.teams){
+            var team = await Team.findOne({teamNumber: id});
+            if(!team) res.status(404);
+            else return_arr.push(team); 
+        }
+        return res.status(200).send(return_arr);
+    }
 })
 
 module.exports = router;

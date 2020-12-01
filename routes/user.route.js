@@ -41,7 +41,7 @@ router.post('/userLogin', async(req,res) => {
         if(err) return res.status(400).send('Something went wrong.');
         if(pass){
             const token = user.generateAuthToken();
-            return res.status(200).header('x-access-token', token).send(user.email);
+            return res.status(200).header('x-auth-token', token).send(user.email);
         } else {
             return res.status(401).send("Wrong password.");
         }

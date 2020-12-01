@@ -9,7 +9,7 @@ const userRoute = require('./routes/user.route');
 const teamsRoute = require('./routes/teams.route');
 const tasksRoute = require('./routes/tasks.route');
 
-app.use(cors());
+app.use(cors({exposedHeaders: ['x-auth-token']}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 

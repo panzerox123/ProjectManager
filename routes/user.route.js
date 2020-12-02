@@ -59,7 +59,7 @@ router.get('/teams',auth,async(req,res)=>{
             if(!team) res.status(404);
             else return_arr.push(team); 
         }
-        return res.status(200).send(return_arr);
+        return res.status(200).json(return_arr);
     }
 })
 

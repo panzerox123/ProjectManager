@@ -3,29 +3,30 @@ const mongoose = require('mongoose');
 const TaskSchema = new mongoose.Schema({
     taskName: {
         type: String,
+        required: true
     },
-    taskStatus: {
-        type: Number
+    parent_task:{
+        type: mongoose.Schema.Types.ObjectId
     },
-    subTasks: {
+    children: {
+        type: [mongoose.Schema.Types.ObjectId]
+    },
+    taskComments: {
         type: [mongoose.Schema.Types.ObjectId]
     }
 })
 
-const SubTaskSchema = new mongoose.Schema({
-    subTaskName: {
-        type: String
+const CommentSchema = new mongoose.Schema({
+    commentUser: {
+        type: String,
     },
-    subTaskStatus: {
-        type: Number
+    commentText: {
+        type: String,
     },
-    subTaskDesc: {
-        type: String
-    }
 })
 
 const Task = mongoose.model('Task', TaskSchema);
-const SubTask = mongoose.model('SubTask', SubTaskSchema);
+const Comment = mongoose.model('Comment', CommentSchema);
 
 exports.Task = Task;
-exports.SubTask = SubTask;
+exports.Comment = Comment;

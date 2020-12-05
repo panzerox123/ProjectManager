@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/current', auth, async(req,res) => {
     const user = await User.findById(req.user._id).select("-password");
-    if(!user) return res.status(401);
+    if(!user) return res.status(401).send();
     return res.status(200).send(user);
 })
 
@@ -51,13 +51,13 @@ router.post('/userLogin', async(req,res) => {
 
 router.get('/teams',auth,async(req,res)=>{
     let user = await User.findById(req.user._id);
-    if(!user) return res.status(404);
+    if(!user) return res.status(404).send();
     else {
         var return_arr = [];
         console.log(user.teams);
         for(id in user.teams){
             var team = await Team.findOne({teamNumber: user.teams[id]});
-            if(!team) res.status(404);
+            if(!team) res.status(404).send();
             else return_arr.push(team); 
         }
         return res.status(200).json(return_arr);

@@ -13,6 +13,10 @@ const TaskSchema = new mongoose.Schema({
     },
     taskComments: {
         type: [mongoose.Schema.Types.ObjectId]
+    },
+    taskStatus:{
+        type: Number,
+        default: 0
     }
 })
 

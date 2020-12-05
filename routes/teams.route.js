@@ -22,17 +22,17 @@ router.post('/createTeam', auth, async (req,res) => {
 
 router.post('/joinTeam',auth,async(req,res)=>{
     let user = await User.findById(req.user._id);
-    if(!user)return res.status(401);
+    if(!user)return res.status(401).send();
     let team = Team.findById(req.body.teamNumber);
-    if(!team) return res.send(404);
+    if(!team) return res.send(404).send();
     user.teams.push(req.body.teamNumber);
     await user.save();
-    return res.status(200);
+    return res.status(200).send();
 })
 
 router.get('/team/:teamNumber', auth, async(req,res)=>{
     let user = await User.findById(req.user._id);
-    if(!user) return res.status(404);
+    if(!user) return res.status(404).send();
     if(user.teams.includes(req.params.teamNumber)){
         let team = await Team.findOne({teamNumber: req.params.teamNumber});
         if(!team) return res.status(404).send("Team does not exist");
